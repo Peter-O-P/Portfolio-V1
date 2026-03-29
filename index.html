@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PM Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  @font-face {
+    font-family: 'Datatype';
+    src: url('https://fonts.cdnfonts.com/s/15651/Datatype.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+</style>
+<style>
+  :root {
+    --bg: #080B12;
+    --bg2: #0E1220;
+    --bg3: #141828;
+    --card: #111520;
+    --card-hover: #181E30;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(99,179,255,0.3);
+    --accent: #3B82F6;
+    --accent2: #06EEFF;
+    --accent3: #FF6B6B;
+    --accent4: #A78BFA;
+    --accent5: #34D399;
+    --text: #E8ECF4;
+    --muted: #7A8499;
+    --tag-bg: rgba(59,130,246,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+
+  /* HERO GLOW */
+  .hero-glow {
+    position: absolute; top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse, rgba(59,130,246,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(8,11,18,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Datatype', 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--accent2); }
+
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent2);
+    background: rgba(6,238,255,0.08);
+    border: 1px solid rgba(6,238,255,0.2);
+    padding: 8px 18px; border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: rgba(6,238,255,0.15); border-color: rgba(6,238,255,0.5); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--accent2);
+    background: rgba(6,238,255,0.08);
+    border: 1px solid rgba(6,238,255,0.15);
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 32px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Datatype', monospace;
+    font-weight: 800;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .line1 { display: block; color: var(--text); }
+  .hero h1 .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent4) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 18px; font-weight: 300;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Datatype', monospace;
+    font-size: 36px; font-weight: 800;
+    color: var(--text);
+    display: block;
+  }
+  .stat-label {
+    font-size: 12px; font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  .stat-divider {
+    width: 1px; background: var(--border);
+    align-self: stretch;
+  }
+
+  /* GRID LINES BG */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative; z-index: 1;
+    padding: 80px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Datatype', monospace;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800; letter-spacing: -1.5px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    font-size: 15px; color: var(--muted);
+    max-width: 480px; line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  /* FILTER TABS */
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    padding: 8px 18px; border-radius: 4px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    background: var(--card-hover);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.1);
+  }
+
+  .card.hidden { display: none; }
+
+  .card-thumb {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    font-size: 64px;
+  }
+
+  .card-thumb img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover .card-thumb img {
+    transform: scale(1.04);
+  }
+
+  .card.featured .card-thumb {
+    height: 100%;
+    min-height: 220px;
+  }
+
+  .card.featured .card-thumb img {
+    object-position: center center;
+  }
+
+  .card-thumb-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+  }
+
+  .card-thumb-bg {
+    position: absolute; inset: 0;
+    opacity: 0.15;
+  }
+
+  .card-thumb-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .card-body { padding: 24px; }
+
+  .card-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 3px 10px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  .tag-blue { background: rgba(59,130,246,0.15); color: #60A5FA; }
+  .tag-cyan { background: rgba(6,238,255,0.1); color: var(--accent2); }
+  .tag-purple { background: rgba(167,139,250,0.15); color: #C4B5FD; }
+  .tag-green { background: rgba(52,211,153,0.15); color: #6EE7B7; }
+  .tag-red { background: rgba(255,107,107,0.15); color: #FCA5A5; }
+
+  .card-title {
+    font-family: 'Datatype', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .card-desc {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.6; margin-bottom: 20px;
+  }
+
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  .card-arrow {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .card:hover .card-arrow {
+    background: var(--accent);
+    color: white;
+    transform: translateX(2px);
+  }
+
+  /* FEATURED CARD (wide) */
+  .card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+  }
+
+  .card.featured.hidden { display: none !important; }
+
+  @media (max-width: 768px) {
+    .card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .card.featured .card-thumb { height: 180px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { gap: 24px; }
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,8,15,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-hover);
+    border-radius: 16px;
+    max-width: 720px; width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    position: relative;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 32px 32px 0;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+
+  .modal-close {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+  .modal-body { padding: 24px 32px 32px; }
+
+  .modal-icon {
+    font-size: 48px; margin-bottom: 16px;
+    display: block;
+  }
+
+  .modal-title {
+    font-family: 'Datatype', monospace;
+    font-size: 28px; font-weight: 800;
+    letter-spacing: -1px; margin-bottom: 8px;
+  }
+
+  .modal-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--muted);
+    margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .modal-section-title {
+    font-family: 'Datatype', monospace;
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 24px 0 10px;
+  }
+
+  .modal-text {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .modal-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .modal-list li {
+    font-size: 14px; color: var(--muted);
+    padding-left: 16px; position: relative;
+    line-height: 1.6;
+  }
+
+  .modal-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 12px;
+  }
+
+  .modal-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent2);
+    text-decoration: none;
+    border: 1px solid rgba(6,238,255,0.2);
+    background: rgba(6,238,255,0.06);
+    padding: 8px 16px; border-radius: 6px;
+    margin-top: 20px;
+    transition: all 0.2s;
+  }
+  .modal-link:hover { background: rgba(6,238,255,0.12); border-color: rgba(6,238,255,0.4); }
+
+  .modal-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 0;
+    margin: 0;
+  }
+
+  .about-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 0 24px; }
+  }
+
+  .about-name {
+    font-family: 'Datatype', monospace;
+    font-size: 42px; font-weight: 800;
+    letter-spacing: -2px; line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .about-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; color: var(--accent2);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+
+  .about-bio {
+    font-size: 15px; color: var(--muted);
+    line-height: 1.7; margin-bottom: 24px;
+  }
+
+  .tool-chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-content: flex-start;
+  }
+
+  .tool-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    padding: 5px 12px; border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .tool-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    padding: 5px 12px; border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .about-metrics {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .metric-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+
+  .metric-val {
+    font-family: 'Datatype', monospace;
+    font-size: 32px; font-weight: 800;
+    color: var(--text); display: block;
+    line-height: 1;
+  }
+
+  .metric-val span { color: var(--accent); }
+
+  .metric-lbl {
+    font-size: 12px; color: var(--muted);
+    margin-top: 6px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 100%;
+    background: var(--bg);
+  }
+
+  .footer-left {
+    font-family: 'Datatype', monospace;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .footer-left span { color: var(--accent2); }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in { animation: fadeUp 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PM<span>.</span>Portfolio</div>
+  <div class="nav-links">
+    <a href="#portfolio">Work</a>
+    <a href="#about">About</a>
+    <a href="links.html">Contact</a>
+  </div>
+  <a href="links.html" class="nav-cta">Available for work -></a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Project Manager - Portfolio 2025</div>
+  <h1>
+    <span class="line1">Turning ideas into</span>
+    <span class="line2">meaningful products</span>
+  </h1>
+  <p class="hero-sub">A curated collection of project management artifacts - roadmaps, pipelines, planning frameworks, test tasks, and the thinking behind every decision.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Artifacts</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">1.5+</span>
+      <span class="stat-label">Years PM</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Iterations</span>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">// Selected Work</div>
+  <h2 class="section-title">Artifacts & Case Studies</h2>
+  <p class="section-desc">Click any card to explore the artifact, the context, and the thinking behind it.</p>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterCards(event, 'all')">All</button>
+    <button class="filter-btn" onclick="filterCards(event, 'roadmap')">Roadmaps</button>
+    <button class="filter-btn" onclick="filterCards(event, 'planning')">Planning</button>
+    <button class="filter-btn" onclick="filterCards(event, 'jira')">Jira</button>
+    <button class="filter-btn" onclick="filterCards(event, 'test-task')">Test Tasks</button>
+    <button class="filter-btn" onclick="filterCards(event, 'pet-project')">Pet Projects</button>
+  </div>
+
+  <div class="card-grid" id="cardGrid">
+
+    <!-- CARD 1: FigJam Roadmap (FEATURED) -->
+    <div class="card featured" data-cat="roadmap" onclick="openModal('roadmap')" id="featuredCard">
+      <div class="card-thumb" data-img="images/RoadMap_Pic.jpg" data-emoji="🗺️" data-bg="linear-gradient(135deg, #0F1629, #1a2040)" data-color="linear-gradient(135deg, #3B82F6, #8B5CF6)"></div>
+      <div class="card-body" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="card-tags">
+          <span class="tag tag-blue">FigJam</span>
+          <span class="tag tag-purple">Strategy</span>
+          <span class="tag tag-cyan">Featured</span>
+        </div>
+        <div class="card-title">Development Roadmap Q1–Q2</div>
+        <div class="card-desc">A dual-view FigJam roadmap aligning Art and IT disciplines across 2 quarters - with Jira integration, a knowledge base panel, and stakeholder visibility built in.</div>
+        <div class="card-footer">
+          <span class="card-meta">FigJam · 2025</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Production Pipeline -->
+    <div class="card" data-cat="roadmap" onclick="openModal('pipeline')">
+      <div class="card-thumb" data-img="images/pipeline.jpg" data-emoji="⚙️" data-bg="linear-gradient(135deg, #0F1A0F, #182818)" data-color="linear-gradient(135deg, #34D399, #059669)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-green">Production</span>
+          <span class="tag tag-green">Roadmap</span>
+        </div>
+        <div class="card-title">Production Pipeline for a new Feature</div>
+        <div class="card-desc">Structured roadmap and production pipeline for new feature development. Includes asset workflows, data organization, and points of interest for the team.</div>
+        <div class="card-footer">
+          <span class="card-meta">FigJam - 2025</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Project Planning -->
+    <div class="card" data-cat="planning" onclick="openModal('planning')">
+      <div class="card-thumb" data-img="images/planning.jpg" data-emoji="📐" data-bg="linear-gradient(135deg, #0F1020, #181A30)" data-color="linear-gradient(135deg, #A78BFA, #7C3AED)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-purple">Planning</span>
+        </div>
+        <div class="card-title">Project Planning</div>
+        <div class="card-desc">Comprehensive planning framework covering scope, timelines, and task structuring.</div>
+        <div class="card-footer">
+          <span class="card-meta">Google Sheets / Miro - 2025</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Work with Jira -->
+    <div class="card" data-cat="jira" onclick="openModal('jira')">
+      <div class="card-thumb" data-img="images/jira.jpg" data-emoji="📋" data-bg="linear-gradient(135deg, #0D1F1A, #142820)" data-color="linear-gradient(135deg, #3B82F6, #1D4ED8)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-blue">Agile</span>
+          <span class="tag tag-blue">Jira</span>
+        </div>
+        <div class="card-title">Work with Jira</div>
+        <div class="card-desc">Agile project management setup with backlog, sprint planning, and task tracking.</div>
+        <div class="card-footer">
+          <span class="card-meta">Jira - 2025</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5: Various Test Tasks -->
+    <div class="card" data-cat="test-task" onclick="openModal('testtasks')">
+      <div class="card-thumb" data-img="images/testtasks.jpg" data-emoji="🧪" data-bg="linear-gradient(135deg, #1A1208, #2A1E0A)" data-color="linear-gradient(135deg, #F59E0B, #D97706)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-red">Test Task</span>
+          <span class="tag tag-red">Problem-solving</span>
+        </div>
+        <div class="card-title">Various Test Tasks</div>
+        <div class="card-desc">Completed real world test tasks containing evaluation and validation processes for assessing workflows and outcomes.</div>
+        <div class="card-footer">
+          <span class="card-meta">Documentation tools - 2025</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6: Pet Projects -->
+    <div class="card" data-cat="pet-project" onclick="openModal('pet')">
+      <div class="card-thumb" data-img="images/pet.jpg" data-emoji="💡" data-bg="linear-gradient(135deg, #091A1A, #0D2626)" data-color="linear-gradient(135deg, #06EEFF, #0891B2)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-cyan">Personal</span>
+          <span class="tag tag-cyan">Pet Project</span>
+        </div>
+        <div class="card-title">Pet Projects</div>
+        <div class="card-desc">Personal projects including portfolio website and other experiments.</div>
+        <div class="card-footer">
+          <span class="card-meta">Various tools - 2025</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="about-name">Petro Osypenko</div>
+      <div class="about-role">Project Manager</div>
+      <p class="about-bio">
+        Things that drive me the most are curiosity, ability to support and help the team achieve common meaningful goals, and a genuine desire to understand how things work - and how they can work better. I find joy in turning complex, sometimes messy, ideas into clear direction and practical steps. Interactions with talented people and seeing ideas become real - is what I enjoy most about Project Management.
+      </p>
+      <div class="tool-chips">
+        <span class="tool-chip">Jira</span>
+        <span class="tool-chip">FigJam / Miro</span>
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Notion</span>
+        <span class="tool-chip">Slack</span>
+        <span class="tool-chip">Video conferencing tools</span>
+        <span class="tool-chip">Team communication platforms</span>
+        <span class="tool-chip">AI assistants & tools</span>
+        <span class="tool-chip">Agile</span>
+        <span class="tool-chip">Scrum</span>
+        <span class="tool-chip">Kanban</span>
+        <span class="tool-chip">Google Workspace</span>
+        <span class="tool-chip">Loom</span>
+      </div>
+    </div>
+    <div class="about-metrics">
+      <div class="metric-card">
+        <span class="metric-val">1.5<span>+</span></span>
+        <div class="metric-lbl">Years in PM</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">40<span>+</span></span>
+        <div class="metric-lbl">Sprints led</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">5<span>+</span></span>
+        <div class="metric-lbl">Roadmaps shipped</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">∞</span>
+        <div class="metric-lbl">Retro sticky notes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">PM<span>.</span>Portfolio</div>
+  <div class="footer-right">Built to prove the passion ;) &middot; 2025</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalContent"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const modalData = {
+  roadmap: {
+    icon: '🗺️',
+    title: 'Development Roadmap Q1-Q2',
+    subtitle: 'FigJam - Strategy - 2025',
+    tags: ['<span class="tag tag-blue">FigJam</span>', '<span class="tag tag-purple">Strategy</span>'],
+    overview: 'An annual roadmap built in FigJam covering 2 quarters of product development. Designed to align Art and IT specialists, with stakeholders in mind, around shared quarterly OKRs. With an addition of a "Data Base" knowledge panel.',
+    sections: [
+      { title: 'What I built', items: [
+        'Full Q1-Q2 initiative map with current / next quarter structure',
+        'Colour-coded swimlanes per discipline (ART, IT, Sprint rows)',
+        'Jira-integrated - buttons and task cards with live sync and issue tracking',
+        'Knowledge base panel layer with legal docs, branches, and team contacts',
+        'Milestone and goals summary block for stakeholder visibility and general sync',
+        'Dual-view layout separating sprint execution (right) from project governance (left)',
+      ]},
+      { title: 'Process & decisions', prose: 'I approached the roadmap as a living tool rather than a static document. Throughout the process I iterated based on reflection and feedback. Made conscious trade-offs between detail and clarity. I prioritized usability over completeness - focusing on what the team actually needs to navigate and align, rather than documenting everything in one place. I planned, and managed to ensure, early visibility of dependencies + risks, while keeping the structure flexible enough to adapt as the project evolved.' },
+      { title: 'Value created', items: [
+        { main: 'Created a single source of truth', sub: 'Unified roadmap, responsibilities, documentation, and Jira scope in one place for full team visibility' },
+        { main: 'Improved cross-team alignment', sub: 'Clearly defined roles (PM, Art, IT, Tech) and dependencies across functions' },
+        { main: 'Made dependencies visible', sub: 'Highlighted reliance on IT and external factors -> better risk awareness' },
+        { main: 'Connected strategy with execution', sub: 'Linked high-level roadmap with Jira tasks and actual delivery' },
+        { main: 'Simplified navigation of complex info', sub: 'Centralised documentation, branches, scopes -> reduced information fragmentation' },
+      ]},
+      { title: 'Learned during work', items: [
+        { main: 'Simplicity over over-design', sub: 'Overly detailed visuals (colours, micro-alignment) reduce usability' },
+        { main: 'Importance of scalability', sub: 'Some UI elements (e.g. widgets) didn\'t scale well -> need to think systemically' },
+        { main: 'Visual clarity matters as much as content', sub: 'Readability over decoration' },
+        { main: 'Separate layers of information', sub: 'Big epics and smaller tasks should not live at the same visual level' },
+        { main: 'Stakeholder communication is part of the roadmap', sub: '' },
+        { main: 'Some dependencies are better communicated separately', sub: 'e.g. IT risks -> not overloaded into the roadmap itself' },
+      ]},
+    ],
+    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/%D0%9E%D0%BF%D0%B8%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE_Road-Map' },
+  },
+  pipeline: {
+    icon: '⚙️',
+    title: 'Production Pipeline for a new Feature',
+    subtitle: 'FigJam - Production - 2025',
+    tags: ['<span class="tag tag-green">Production</span>', '<span class="tag tag-green">Roadmap</span>'],
+    overview: 'Designed a structured production pipeline for a new "cyber limb" game feature - covering the full workflow from concept to final implementation, including asset management and team coordination.',
+    sections: [
+      { title: 'What I built', items: [
+        'Designed production pipeline for "cyber limb" feature',
+        'Structured workflow from concept to final implementation',
+        'Included database structure for asset management',
+        'Defined production stages and dependencies',
+      ]},
+      { title: 'Tools & Skills', items: [
+        'Tools: FigJam',
+        'Skills: Pipeline design, system thinking, production planning',
+      ]},
+    ],
+    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/Petro_Os_PM' },
+  },
+  planning: {
+    icon: '📐',
+    title: 'Project Planning',
+    subtitle: 'Planning - Coming Soon',
+    tags: ['<span class="tag tag-purple">Planning</span>'],
+    overview: 'A comprehensive planning framework covering scope definition, timeline visualization, and task structuring. Full case study is being prepared.',
+    sections: [
+      { title: 'What I did', items: [
+        'Created Work Breakdown Structure (WBS)',
+        'Defined MVP scope and priorities (Defined beauty corners)',
+        'Built Gantt chart for timeline visualization',
+        'Performed task and resource estimation',
+      ]},
+      { title: 'Tools & Skills', items: [
+        'Tools: Google Sheets, Google Docs, Gantt tools, Miro, FigJam, Learning tools',
+        'Skills: Planning, Estimation, Structuring, Prioritization, Learning',
+      ]},
+      { title: 'Status', prose: 'The full write-up with supporting artifacts is being prepared. This will include the WBS breakdown, Gantt chart screenshots, and a reflection on the planning decisions made.' },
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+  jira: {
+    icon: '📋',
+    title: 'Work with Jira',
+    subtitle: 'Agile - Jira - Coming Soon',
+    tags: ['<span class="tag tag-blue">Agile</span>', '<span class="tag tag-blue">Jira</span>'],
+    overview: 'Agile project management in practice - backlog management, sprint planning, task tracking, and dependency mapping. Full case study is being prepared.',
+    sections: [
+      { title: 'What I did', items: [
+        'Managed backlog and task prioritization',
+        'Conducted sprint planning and execution',
+        'Applied estimations to tasks',
+        'Organized timelines and dependencies',
+      ]},
+      { title: 'Tools & Skills', items: [
+        'Tools: Jira',
+        'Skills: Agile, task management, coordination',
+      ]},
+      { title: 'Status', prose: 'Screenshots and sprint exports are being gathered for the write-up. This case study will show the actual board configurations and planning artifacts used in real sprints.' },
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+  testtasks: {
+    icon: '🧪',
+    title: 'Various Test Tasks',
+    subtitle: 'Test Tasks - Coming Soon',
+    tags: ['<span class="tag tag-red">Test Task</span>', '<span class="tag tag-red">Problem-solving</span>'],
+    overview: 'A collection of real-world test tasks completed as part of evaluation processes - covering conflict management, deliverable validation, and workflow assessment.',
+    sections: [
+      { title: 'What I did', items: [
+        'Completed real world test tasks',
+        'Defined acceptance criteria for deliverables',
+        'Refined conflict management process based on feedback',
+        'Met evaluation standards, successful attempts of exceeding them',
+      ]},
+      { title: 'Tools & Skills', items: [
+        'Tools: Documentation tools',
+        'Skills: Communication, Problem-solving',
+      ]},
+      { title: 'Status', prose: 'The full collection is being curated and written up. Each task will be presented with its brief, my approach, and an honest reflection on what worked and what I would do differently.' },
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+  pet: {
+    icon: '💡',
+    title: 'Pet Projects',
+    subtitle: 'Personal - Coming Soon',
+    tags: ['<span class="tag tag-cyan">Personal</span>', '<span class="tag tag-cyan">Pet Project</span>'],
+    overview: 'Personal side projects including this portfolio website and other experiments - focused on continuous learning, tool exploration, and creative problem solving.',
+    sections: [
+      { title: 'What I did', items: [
+        'Developed personal portfolio website',
+        'Explored additional side projects',
+        'Experimented with tools and workflows',
+        'Focused on continuous skill improvement',
+      ]},
+      { title: 'Tools & Skills', items: [
+        'Tools: Various (web, design, productivity tools)',
+        'Skills: Creativity, learning agility, self-management',
+      ]},
+      { title: 'Status', prose: 'More details on individual projects are being added over time. This section will grow as new experiments and side projects take shape.' },
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+};
+
+function openModal(key) {
+  const d = modalData[key];
+  if (!d) return;
+
+  let html = `
+    <span class="modal-icon">${d.icon}</span>
+    <div class="card-tags" style="margin-bottom:12px">${d.tags.join('')}</div>
+    <div class="modal-title">${d.title}</div>
+    <div class="modal-subtitle">${d.subtitle}</div>
+    <hr class="modal-divider"/>
+    <div class="modal-section-title">Overview</div>
+    <p class="modal-text">${d.overview}</p>
+  `;
+
+  d.sections.forEach(s => {
+    html += `<div class="modal-section-title">${s.title}</div>`;
+    if (s.prose) {
+      html += `<p class="modal-text">${s.prose}</p>`;
+    } else {
+      html += `<ul class="modal-list">`;
+      s.items.forEach(i => {
+        if (typeof i === 'object') {
+          html += `<li><strong style="color:var(--text)">${i.main}</strong>${i.sub ? '<br><span style="font-size:13px;padding-left:4px">' + i.sub + '</span>' : ''}</li>`;
+        } else {
+          html += `<li>${i}</li>`;
+        }
+      });
+      html += `</ul>`;
+    }
+  });
+
+  if (d.link) {
+    html += `<a href="${d.link.href}" class="modal-link">${d.link.text}</a>`;
+  }
+
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function filterCards(e, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+
+  document.querySelectorAll('.card').forEach(card => {
+    const c = card.dataset.cat;
+    if (cat === 'all' || c === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  // Featured card: restore span 2 when visible, reset when hidden
+  const featured = document.getElementById('featuredCard');
+  if (featured) {
+    if (featured.classList.contains('hidden')) {
+      featured.style.gridColumn = '';
+    } else {
+      featured.style.gridColumn = 'span 2';
+    }
+  }
+}
+
+// --- CARD THUMB INITIALISER ---
+// For each .card-thumb: try loading data-img.
+// If it loads → show image. If it fails → show emoji fallback.
+document.querySelectorAll('.card-thumb').forEach(thumb => {
+  const imgSrc = thumb.dataset.img;
+  const emoji  = thumb.dataset.emoji;
+  const bg     = thumb.dataset.bg;
+  const color  = thumb.dataset.color;
+
+  thumb.style.background = bg;
+
+  if (imgSrc) {
+    const img = new Image();
+    img.onload = () => {
+      thumb.innerHTML = '';
+      const el = document.createElement('img');
+      el.src = imgSrc;
+      el.alt = emoji;
+      thumb.appendChild(el);
+    };
+    img.onerror = () => renderEmoji(thumb, emoji, color);
+    img.src = imgSrc;
+  } else {
+    renderEmoji(thumb, emoji, color);
+  }
+});
+
+function renderEmoji(thumb, emoji, color) {
+  thumb.innerHTML = `
+    <div style="position:absolute;inset:0;background:${color};opacity:0.15;"></div>
+    <div class="card-thumb-pattern"></div>
+    <div class="card-thumb-inner">${emoji}</div>
+  `;
+}
+</script>
+</body>
+</html>
