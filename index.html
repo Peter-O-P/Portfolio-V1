@@ -366,6 +366,59 @@
     line-height: 1.6; margin-bottom: 20px;
   }
 
+  /* --- COMING SOON STYLES --- */
+  .card.coming-soon .card-body {
+    background: #0D0F0A;
+  }
+
+  .card.coming-soon .card-desc {
+    color: #C49A0A;
+  }
+
+  .tape-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 24px;
+    background: repeating-linear-gradient(
+      45deg,
+      #F5C400, #F5C400 8px,
+      #1a1a00 8px, #1a1a00 16px
+    );
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(0,0,0,1),
+      0 0 12px rgba(0,0,0,1),
+      1px 1px 0 rgba(0,0,0,0.9),
+      -1px -1px 0 rgba(0,0,0,0.9),
+      1px -1px 0 rgba(0,0,0,0.9),
+      -1px 1px 0 rgba(0,0,0,0.9);
+    z-index: 10;
+  }
+
+  .interior-tape {
+    height: 20px;
+    background: repeating-linear-gradient(
+      45deg,
+      #F5C400, #F5C400 7px,
+      #1a1a00 7px, #1a1a00 14px
+    );
+    margin: -24px -24px 16px -24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.16em;
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(0,0,0,1),
+      1px 1px 0 rgba(0,0,0,0.9),
+      -1px -1px 0 rgba(0,0,0,0.9);
+  }
+  /* --- END COMING SOON STYLES --- */
+
   .card-footer {
     display: flex; align-items: center; justify-content: space-between;
     padding-top: 16px;
@@ -525,6 +578,86 @@
     border: none; border-top: 1px solid var(--border);
     margin: 20px 0;
   }
+
+  /* WIP MODAL STYLES */
+  .modal.wip { border-color: rgba(245,196,0,0.25); }
+
+  .modal-wip-header {
+    background: repeating-linear-gradient(
+      45deg,
+      #F5C400, #F5C400 8px,
+      #1a1a00 8px, #1a1a00 16px
+    );
+    height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.18em;
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,1),
+      1px 1px 0 rgba(0,0,0,0.9), -1px -1px 0 rgba(0,0,0,0.9),
+      1px -1px 0 rgba(0,0,0,0.9), -1px 1px 0 rgba(0,0,0,0.9);
+    flex-shrink: 0;
+  }
+
+  .modal-wip-footer {
+    height: 8px;
+    background: repeating-linear-gradient(
+      45deg,
+      #F5C400, #F5C400 8px,
+      #1a1a00 8px, #1a1a00 16px
+    );
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .wip-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(245,196,0,0.07);
+    border: 1px solid rgba(245,196,0,0.22);
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+  }
+
+  .wip-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #F5C400; flex-shrink: 0;
+    animation: wipPulse 1.4s infinite;
+  }
+
+  @keyframes wipPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.15; }
+  }
+
+  .wip-badge-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: #C49A0A; letter-spacing: 0.06em;
+  }
+
+  .modal-tape-divider {
+    height: 18px;
+    background: repeating-linear-gradient(
+      45deg,
+      #F5C400, #F5C400 7px,
+      #1a1a00 7px, #1a1a00 14px
+    );
+    margin: 20px -32px;
+    opacity: 0.55;
+  }
+
+  .modal-link.wip-link {
+    color: #C49A0A;
+    border-color: rgba(245,196,0,0.2);
+    background: rgba(245,196,0,0.06);
+  }
+  .modal-link.wip-link:hover {
+    background: rgba(245,196,0,0.12);
+    border-color: rgba(245,196,0,0.4);
+  }
+  /* END WIP MODAL STYLES */
 
   /* ABOUT STRIP */
   .about-strip {
@@ -734,7 +867,7 @@
     </div>
 
     <!-- CARD 2: Production Pipeline -->
-    <div class="card" data-cat="roadmap" onclick="openModal('pipeline')">
+    <div class="card" data-cat="roadmap" data-coming-soon="true" onclick="openModal('pipeline')">
       <div class="card-thumb" data-img="images/pipeline.jpg" data-emoji="⚙️" data-bg="linear-gradient(135deg, #0F1A0F, #182818)" data-color="linear-gradient(135deg, #34D399, #059669)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -751,7 +884,7 @@
     </div>
 
     <!-- CARD 3: Project Planning -->
-    <div class="card" data-cat="planning" onclick="openModal('planning')">
+    <div class="card" data-cat="planning" data-coming-soon="true" onclick="openModal('planning')">
       <div class="card-thumb" data-img="images/planning.jpg" data-emoji="📐" data-bg="linear-gradient(135deg, #0F1020, #181A30)" data-color="linear-gradient(135deg, #A78BFA, #7C3AED)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -767,7 +900,7 @@
     </div>
 
     <!-- CARD 4: Work with Jira -->
-    <div class="card" data-cat="jira" onclick="openModal('jira')">
+    <div class="card" data-cat="jira" data-coming-soon="true" onclick="openModal('jira')">
       <div class="card-thumb" data-img="images/jira.jpg" data-emoji="📋" data-bg="linear-gradient(135deg, #0D1F1A, #142820)" data-color="linear-gradient(135deg, #3B82F6, #1D4ED8)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -784,7 +917,7 @@
     </div>
 
     <!-- CARD 5: Various Test Tasks -->
-    <div class="card" data-cat="test-task" onclick="openModal('testtasks')">
+    <div class="card" data-cat="test-task" data-coming-soon="true" onclick="openModal('testtasks')">
       <div class="card-thumb" data-img="images/testtasks.jpg" data-emoji="🧪" data-bg="linear-gradient(135deg, #1A1208, #2A1E0A)" data-color="linear-gradient(135deg, #F59E0B, #D97706)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -801,7 +934,7 @@
     </div>
 
     <!-- CARD 6: Pet Projects -->
-    <div class="card" data-cat="pet-project" onclick="openModal('pet')">
+    <div class="card" data-cat="pet-project" data-coming-soon="true" onclick="openModal('pet')">
       <div class="card-thumb" data-img="images/pet.jpg" data-emoji="💡" data-bg="linear-gradient(135deg, #091A1A, #0D2626)" data-color="linear-gradient(135deg, #06EEFF, #0891B2)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -875,11 +1008,13 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modalBox">
+    <div id="modalWipHeader"></div>
     <div class="modal-header">
       <div></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="modalContent"></div>
+    <div id="modalWipFooter"></div>
   </div>
 </div>
 
@@ -920,6 +1055,7 @@ const modalData = {
     link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/%D0%9E%D0%BF%D0%B8%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE_Road-Map' },
   },
   pipeline: {
+    wip: true,
     icon: '⚙️',
     title: 'Production Pipeline for a new Feature',
     subtitle: 'FigJam - Production - 2025',
@@ -940,6 +1076,7 @@ const modalData = {
     link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/Petro_Os_PM' },
   },
   planning: {
+    wip: true,
     icon: '📐',
     title: 'Project Planning',
     subtitle: 'Planning - Coming Soon',
@@ -961,6 +1098,7 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   jira: {
+    wip: true,
     icon: '📋',
     title: 'Work with Jira',
     subtitle: 'Agile - Jira - Coming Soon',
@@ -982,6 +1120,7 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   testtasks: {
+    wip: true,
     icon: '🧪',
     title: 'Various Test Tasks',
     subtitle: 'Test Tasks - Coming Soon',
@@ -1003,6 +1142,7 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   pet: {
+    wip: true,
     icon: '💡',
     title: 'Pet Projects',
     subtitle: 'Personal - Coming Soon',
@@ -1029,17 +1169,47 @@ function openModal(key) {
   const d = modalData[key];
   if (!d) return;
 
+  const box = document.getElementById('modalBox');
+  const wipHeader = document.getElementById('modalWipHeader');
+  const wipFooter = document.getElementById('modalWipFooter');
+
+  // apply or remove wip class and tape elements
+  if (d.wip) {
+    box.classList.add('wip');
+    wipHeader.innerHTML = '<div class="modal-wip-header">WORK IN PROGRESS</div>';
+    wipFooter.innerHTML = '<div class="modal-wip-footer"></div>';
+  } else {
+    box.classList.remove('wip');
+    wipHeader.innerHTML = '';
+    wipFooter.innerHTML = '';
+  }
+
+  // build body content
   let html = `
     <span class="modal-icon">${d.icon}</span>
     <div class="card-tags" style="margin-bottom:12px">${d.tags.join('')}</div>
     <div class="modal-title">${d.title}</div>
     <div class="modal-subtitle">${d.subtitle}</div>
-    <hr class="modal-divider"/>
-    <div class="modal-section-title">Overview</div>
-    <p class="modal-text">${d.overview}</p>
   `;
 
-  d.sections.forEach(s => {
+  if (d.wip) {
+    html += `
+      <div class="wip-badge">
+        <div class="wip-dot"></div>
+        <span class="wip-badge-text">This case study is currently being prepared</span>
+      </div>
+    `;
+  } else {
+    html += `<hr class="modal-divider"/>`;
+  }
+
+  html += `<div class="modal-section-title">Overview</div><p class="modal-text">${d.overview}</p>`;
+
+  d.sections.forEach((s, i) => {
+    // insert tape divider before Status section in wip modals
+    if (d.wip && s.title === 'Status') {
+      html += `<div class="modal-tape-divider"></div>`;
+    }
     html += `<div class="modal-section-title">${s.title}</div>`;
     if (s.prose) {
       html += `<p class="modal-text">${s.prose}</p>`;
@@ -1057,7 +1227,8 @@ function openModal(key) {
   });
 
   if (d.link) {
-    html += `<a href="${d.link.href}" class="modal-link">${d.link.text}</a>`;
+    const linkClass = d.wip ? 'modal-link wip-link' : 'modal-link';
+    html += `<a href="${d.link.href}" class="${linkClass}">${d.link.text}</a>`;
   }
 
   document.getElementById('modalContent').innerHTML = html;
@@ -1134,6 +1305,32 @@ function renderEmoji(thumb, emoji, color) {
     <div class="card-thumb-inner">${emoji}</div>
   `;
 }
+
+// --- COMING SOON INITIALISER ---
+// To toggle a card: change data-coming-soon="true" to data-coming-soon="false"
+document.querySelectorAll('.card[data-coming-soon="true"]').forEach(card => {
+  // 1. Apply styling class
+  card.classList.add('coming-soon');
+
+  // 2. Inject tape bar into thumb
+  const thumb = card.querySelector('.card-thumb');
+  if (thumb) {
+    const bar = document.createElement('div');
+    bar.className = 'tape-bar';
+    bar.textContent = 'COMING SOON';
+    thumb.appendChild(bar);
+  }
+
+  // 3. Inject interior tape at top of card body
+  const body = card.querySelector('.card-body');
+  if (body) {
+    const strip = document.createElement('div');
+    strip.className = 'interior-tape';
+    strip.textContent = 'WORK IN PROGRESS';
+    body.insertBefore(strip, body.firstChild);
+  }
+});
+// --- END COMING SOON INITIALISER ---
 </script>
 </body>
 </html>
