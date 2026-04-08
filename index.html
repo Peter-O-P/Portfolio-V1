@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PM Portfolio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -146,9 +147,9 @@
     font-family: 'Datatype', monospace;
     font-weight: 800;
     font-size: clamp(48px, 8vw, 96px);
-    line-height: 0.95;
+    line-height: 1.0;
     letter-spacing: -3px;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     animation: fadeUp 0.6s 0.1s ease both;
   }
 
@@ -283,7 +284,31 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.1);
   }
 
-  .card.hidden { display: none; }
+  /* !important ensures hidden always wins over display:flex / display:grid on any card variant */
+  .card.hidden { display: none !important; }
+
+  /* Flex column so card-body always fills full card height (fixes WIP dark mask on short-content cards) */
+  .card:not(.featured) {
+    display: flex;
+    flex-direction: column;
+  }
+  .card:not(.featured) .card-body {
+    flex: 1;
+  }
+
+  /* When a specific filter is active, the featured card collapses to a normal card size */
+  .card-grid.filtered .card.featured {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-grid.filtered .card.featured .card-body {
+    flex: 1;
+  }
+  .card-grid.filtered .card.featured .card-thumb {
+    height: 200px;
+    min-height: unset;
+  }
 
   .card-thumb {
     height: 200px;
@@ -451,6 +476,13 @@
     grid-column: span 2;
     display: grid;
     grid-template-columns: 280px 1fr;
+  }
+
+  /* Featured card body centers content vertically within the grid cell */
+  .card.featured .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .card.featured.hidden { display: none !important; }
@@ -807,7 +839,7 @@
 <div class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
-  <div class="hero-badge">Project Manager - Portfolio 2026</div>
+  <div class="hero-badge">Project Manager - Portfolio 2025</div>
   <h1>
     <span class="line1">Turning ideas into</span>
     <span class="line2">meaningful products</span>
@@ -849,9 +881,9 @@
   <div class="card-grid" id="cardGrid">
 
     <!-- CARD 1: FigJam Roadmap (FEATURED) -->
-    <div class="card featured" data-cat="roadmap" onclick="openModal('roadmap')" id="featuredCard">
+    <div class="card featured" data-cat="roadmap" data-modal-key="roadmap" data-coming-soon="false" onclick="openModal('roadmap')" id="featuredCard">
       <div class="card-thumb" data-img="images/RoadMap_Pic.jpg" data-emoji="🗺️" data-bg="linear-gradient(135deg, #0F1629, #1a2040)" data-color="linear-gradient(135deg, #3B82F6, #8B5CF6)"></div>
-      <div class="card-body" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="card-body" style="justify-content:center;">
         <div class="card-tags">
           <span class="tag tag-blue">FigJam</span>
           <span class="tag tag-purple">Strategy</span>
@@ -867,7 +899,7 @@
     </div>
 
     <!-- CARD 2: Production Pipeline -->
-    <div class="card" data-cat="roadmap" data-coming-soon="true" onclick="openModal('pipeline')">
+    <div class="card" data-cat="roadmap" data-modal-key="pipeline" data-coming-soon="true" onclick="openModal('pipeline')">
       <div class="card-thumb" data-img="images/pipeline.jpg" data-emoji="⚙️" data-bg="linear-gradient(135deg, #0F1A0F, #182818)" data-color="linear-gradient(135deg, #34D399, #059669)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -884,7 +916,7 @@
     </div>
 
     <!-- CARD 3: Project Planning -->
-    <div class="card" data-cat="planning" data-coming-soon="true" onclick="openModal('planning')">
+    <div class="card" data-cat="planning" data-modal-key="planning" data-coming-soon="true" onclick="openModal('planning')">
       <div class="card-thumb" data-img="images/planning.jpg" data-emoji="📐" data-bg="linear-gradient(135deg, #0F1020, #181A30)" data-color="linear-gradient(135deg, #A78BFA, #7C3AED)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -900,7 +932,7 @@
     </div>
 
     <!-- CARD 4: Work with Jira -->
-    <div class="card" data-cat="jira" data-coming-soon="true" onclick="openModal('jira')">
+    <div class="card" data-cat="jira" data-modal-key="jira" data-coming-soon="true" onclick="openModal('jira')">
       <div class="card-thumb" data-img="images/jira.jpg" data-emoji="📋" data-bg="linear-gradient(135deg, #0D1F1A, #142820)" data-color="linear-gradient(135deg, #3B82F6, #1D4ED8)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -917,7 +949,7 @@
     </div>
 
     <!-- CARD 5: Various Test Tasks -->
-    <div class="card" data-cat="test-task" data-coming-soon="true" onclick="openModal('testtasks')">
+    <div class="card" data-cat="test-task" data-modal-key="testtasks" data-coming-soon="true" onclick="openModal('testtasks')">
       <div class="card-thumb" data-img="images/testtasks.jpg" data-emoji="🧪" data-bg="linear-gradient(135deg, #1A1208, #2A1E0A)" data-color="linear-gradient(135deg, #F59E0B, #D97706)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -934,7 +966,7 @@
     </div>
 
     <!-- CARD 6: Pet Projects -->
-    <div class="card" data-cat="pet-project" data-coming-soon="true" onclick="openModal('pet')">
+    <div class="card" data-cat="pet-project" data-modal-key="pet" data-coming-soon="true" onclick="openModal('pet')">
       <div class="card-thumb" data-img="images/pet.jpg" data-emoji="💡" data-bg="linear-gradient(135deg, #091A1A, #0D2626)" data-color="linear-gradient(135deg, #06EEFF, #0891B2)"></div>
       <div class="card-body">
         <div class="card-tags">
@@ -957,7 +989,7 @@
 <div class="about-strip" id="about">
   <div class="about-inner">
     <div>
-      <div class="about-name">Petro Osypenko</div>
+      <div class="about-name">Your Name</div>
       <div class="about-role">Project Manager</div>
       <p class="about-bio">
         Things that drive me the most are curiosity, ability to support and help the team achieve common meaningful goals, and a genuine desire to understand how things work - and how they can work better. I find joy in turning complex, sometimes messy, ideas into clear direction and practical steps. Interactions with talented people and seeing ideas become real - is what I enjoy most about Project Management.
@@ -1052,10 +1084,9 @@ const modalData = {
         { main: 'Some dependencies are better communicated separately', sub: 'e.g. IT risks -> not overloaded into the roadmap itself' },
       ]},
     ],
-    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/%D0%9E%D0%BF%D0%B8%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE_Road-Map' },
+    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/%D0%9E%D0%BF%D0%B8%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE_Road-Map', external: true },
   },
   pipeline: {
-    wip: true,
     icon: '⚙️',
     title: 'Production Pipeline for a new Feature',
     subtitle: 'FigJam - Production - 2025',
@@ -1073,10 +1104,9 @@ const modalData = {
         'Skills: Pipeline design, system thinking, production planning',
       ]},
     ],
-    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/Petro_Os_PM' },
+    link: { text: '-> Open in FigJam', href: 'https://www.figma.com/board/BquElJHb3VPMW0RTgiAbKS/Petro_Os_PM', external: true },
   },
   planning: {
-    wip: true,
     icon: '📐',
     title: 'Project Planning',
     subtitle: 'Planning - Coming Soon',
@@ -1098,7 +1128,6 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   jira: {
-    wip: true,
     icon: '📋',
     title: 'Work with Jira',
     subtitle: 'Agile - Jira - Coming Soon',
@@ -1120,7 +1149,6 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   testtasks: {
-    wip: true,
     icon: '🧪',
     title: 'Various Test Tasks',
     subtitle: 'Test Tasks - Coming Soon',
@@ -1142,7 +1170,6 @@ const modalData = {
     link: { text: '-> Coming soon', href: 'links.html' },
   },
   pet: {
-    wip: true,
     icon: '💡',
     title: 'Pet Projects',
     subtitle: 'Personal - Coming Soon',
@@ -1169,12 +1196,17 @@ function openModal(key) {
   const d = modalData[key];
   if (!d) return;
 
+  // --- UNIFIED WIP TOGGLE ---
+  // Single source of truth: data-coming-soon on the card.
+  // Changing data-coming-soon="true/false" controls BOTH the card face AND the modal interior.
+  const card = document.querySelector(`.card[data-modal-key="${key}"]`);
+  const isWip = card ? card.dataset.comingSoon === 'true' : false;
+
   const box = document.getElementById('modalBox');
   const wipHeader = document.getElementById('modalWipHeader');
   const wipFooter = document.getElementById('modalWipFooter');
 
-  // apply or remove wip class and tape elements
-  if (d.wip) {
+  if (isWip) {
     box.classList.add('wip');
     wipHeader.innerHTML = '<div class="modal-wip-header">WORK IN PROGRESS</div>';
     wipFooter.innerHTML = '<div class="modal-wip-footer"></div>';
@@ -1192,7 +1224,7 @@ function openModal(key) {
     <div class="modal-subtitle">${d.subtitle}</div>
   `;
 
-  if (d.wip) {
+  if (isWip) {
     html += `
       <div class="wip-badge">
         <div class="wip-dot"></div>
@@ -1205,9 +1237,8 @@ function openModal(key) {
 
   html += `<div class="modal-section-title">Overview</div><p class="modal-text">${d.overview}</p>`;
 
-  d.sections.forEach((s, i) => {
-    // insert tape divider before Status section in wip modals
-    if (d.wip && s.title === 'Status') {
+  d.sections.forEach((s) => {
+    if (isWip && s.title === 'Status') {
       html += `<div class="modal-tape-divider"></div>`;
     }
     html += `<div class="modal-section-title">${s.title}</div>`;
@@ -1227,8 +1258,10 @@ function openModal(key) {
   });
 
   if (d.link) {
-    const linkClass = d.wip ? 'modal-link wip-link' : 'modal-link';
-    html += `<a href="${d.link.href}" class="${linkClass}">${d.link.text}</a>`;
+    const linkClass = isWip ? 'modal-link wip-link' : 'modal-link';
+    // External links (e.g. FigJam) open in a new tab; internal links stay in same tab
+    const targetAttr = d.link.external ? ' target="_blank" rel="noopener"' : '';
+    html += `<a href="${d.link.href}" class="${linkClass}"${targetAttr}>${d.link.text}</a>`;
   }
 
   document.getElementById('modalContent').innerHTML = html;
@@ -1251,6 +1284,8 @@ function filterCards(e, cat) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
 
+  const grid = document.getElementById('cardGrid');
+
   document.querySelectorAll('.card').forEach(card => {
     const c = card.dataset.cat;
     if (cat === 'all' || c === cat) {
@@ -1260,20 +1295,16 @@ function filterCards(e, cat) {
     }
   });
 
-  // Featured card: restore span 2 when visible, reset when hidden
-  const featured = document.getElementById('featuredCard');
-  if (featured) {
-    if (featured.classList.contains('hidden')) {
-      featured.style.gridColumn = '';
-    } else {
-      featured.style.gridColumn = 'span 2';
-    }
+  // Under "All": featured card spans 2 columns (wide highlight layout).
+  // Under any specific filter: featured card collapses to normal card size.
+  if (cat === 'all') {
+    grid.classList.remove('filtered');
+  } else {
+    grid.classList.add('filtered');
   }
 }
 
 // --- CARD THUMB INITIALISER ---
-// For each .card-thumb: try loading data-img.
-// If it loads → show image. If it fails → show emoji fallback.
 document.querySelectorAll('.card-thumb').forEach(thumb => {
   const imgSrc = thumb.dataset.img;
   const emoji  = thumb.dataset.emoji;
@@ -1307,12 +1338,13 @@ function renderEmoji(thumb, emoji, color) {
 }
 
 // --- COMING SOON INITIALISER ---
-// To toggle a card: change data-coming-soon="true" to data-coming-soon="false"
+// Single source of truth: data-coming-soon="true" on the card.
+// Controls card face (tape, dark body) AND modal WIP state (via openModal).
+// To toggle: change data-coming-soon="true" -> "false" on the card div.
+// Both the card appearance AND the modal WIP styling will update automatically.
 document.querySelectorAll('.card[data-coming-soon="true"]').forEach(card => {
-  // 1. Apply styling class
   card.classList.add('coming-soon');
 
-  // 2. Inject tape bar into thumb
   const thumb = card.querySelector('.card-thumb');
   if (thumb) {
     const bar = document.createElement('div');
@@ -1321,7 +1353,6 @@ document.querySelectorAll('.card[data-coming-soon="true"]').forEach(card => {
     thumb.appendChild(bar);
   }
 
-  // 3. Inject interior tape at top of card body
   const body = card.querySelector('.card-body');
   if (body) {
     const strip = document.createElement('div');

@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Links - Project Manager Portfolio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -64,10 +65,6 @@
   .link-btn.email:hover{border-color:rgba(52,211,153,0.5);box-shadow:0 12px 40px rgba(52,211,153,0.15)}
   .link-btn.djinni:hover{border-color:rgba(167,139,250,0.5);box-shadow:0 12px 40px rgba(167,139,250,0.15)}
   .link-btn.cv:hover{border-color:rgba(6,238,255,0.5);box-shadow:0 12px 40px rgba(6,238,255,0.15)}
-  .link-btn:nth-child(1){animation-delay:0.15s}
-  .link-btn:nth-child(2){animation-delay:0.22s}
-  .link-btn:nth-child(3){animation-delay:0.29s}
-  .link-btn:nth-child(4){animation-delay:0.36s}
   .link-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;
     justify-content:center;flex-shrink:0;transition:transform 0.25s}
   .link-btn:hover .link-icon{transform:scale(1.08)}
@@ -94,6 +91,51 @@
     box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(6,238,255,0.1);
     display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;
     transition:opacity 0.3s ease,transform 0.3s ease;z-index:999;white-space:nowrap}
+  /* Animation delays — applied to direct children of links-list */
+  .links-list > *:nth-child(1){animation:fadeUp 0.5s 0.15s ease both}
+  .links-list > *:nth-child(2){animation:fadeUp 0.5s 0.22s ease both}
+  .links-list > *:nth-child(3){animation:fadeUp 0.5s 0.29s ease both}
+  .links-list > *:nth-child(4){animation:fadeUp 0.5s 0.36s ease both}
+  /* Email group: button + copy tag fused into one visual unit */
+  .email-group{
+    display:flex;flex-direction:column;
+    animation:fadeUp 0.5s 0.22s ease both;
+  }
+  .email-group .link-btn.email{
+    border-radius:12px 12px 0 0;
+    border-bottom-color:transparent;
+    animation:none;
+  }
+  .email-group .link-btn.email:hover{
+    border-bottom-color:transparent;
+  }
+  .email-copy-tag{
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;padding:8px 18px 8px 24px;
+    background:rgba(52,211,153,0.04);
+    border:1px solid rgba(52,211,153,0.14);
+    border-top:1px solid rgba(52,211,153,0.08);
+    border-radius:0 0 12px 12px;
+    cursor:pointer;
+    transition:background 0.2s,border-color 0.2s;
+  }
+  .email-copy-tag:hover{
+    background:rgba(52,211,153,0.09);
+    border-color:rgba(52,211,153,0.3);
+    border-top-color:rgba(52,211,153,0.12);
+  }
+  .email-copy-addr{
+    font-family:'DM Mono',monospace;font-size:11px;
+    color:rgba(52,211,153,0.55);letter-spacing:0.04em;
+    user-select:all;
+  }
+  .email-copy-btn{
+    display:flex;align-items:center;gap:5px;
+    font-family:'DM Mono',monospace;font-size:10px;
+    color:rgba(52,211,153,0.4);text-transform:uppercase;letter-spacing:0.1em;
+    transition:color 0.2s;flex-shrink:0;
+  }
+  .email-copy-tag:hover .email-copy-btn{color:rgba(52,211,153,0.85);}
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -121,19 +163,31 @@
       <span class="link-arrow">-></span>
     </a>
 
-    <a class="link-btn email" href="mailto:ospetrpetr90@gmail.com">
-      <div class="link-icon email">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="22,6 12,13 2,6" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <div class="email-group">
+      <a class="link-btn email" href="https://mail.google.com/mail/?view=cm&fs=1&to=ospetrpetr90@gmail.com" target="_blank" rel="noopener">
+        <div class="link-icon email">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="22,6 12,13 2,6" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="link-info">
+          <span class="link-label">Write me an email</span>
+          <span class="link-sub">Opens Gmail in browser</span>
+        </div>
+        <span class="link-arrow">-></span>
+      </a>
+      <div class="email-copy-tag" onclick="copyEmail(event)" title="Click to copy email address">
+        <span class="email-copy-addr">ospetrpetr90@gmail.com</span>
+        <span class="email-copy-btn">
+          <svg id="copyIcon" width="13" height="13" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="copyLabel">copy</span>
+        </span>
       </div>
-      <div class="link-info">
-        <span class="link-label">Write me an email</span>
-        <span class="link-sub">ospetrpetr90@gmail.com</span>
-      </div>
-      <span class="link-arrow">-></span>
-    </a>
+    </div>
 
     <a class="link-btn djinni" href="https://djinni.co/q/59433bef00/" target="_blank" rel="noopener">
       <div class="link-icon djinni">
@@ -186,6 +240,20 @@ function downloadCV() {
     toast.style.opacity = '0';
     toast.style.transform = 'translateX(-50%) translateY(20px)';
   }, 3500);
+}
+
+function copyEmail(e) {
+  e.stopPropagation();
+  navigator.clipboard.writeText('ospetrpetr90@gmail.com').then(function() {
+    var label = document.getElementById('copyLabel');
+    var icon = document.getElementById('copyIcon');
+    label.textContent = 'copied!';
+    icon.innerHTML = '<polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+    setTimeout(function() {
+      label.textContent = 'copy';
+      icon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+    }, 2000);
+  });
 }
 </script>
 
