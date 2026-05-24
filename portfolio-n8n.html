@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>n8n Portfolio - Petro Osypenko</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  @font-face {
+    font-family: 'Datatype';
+    src: url('https://fonts.cdnfonts.com/s/15651/Datatype.woff') format('woff');
+    font-weight: normal; font-style: normal;
+  }
+</style>
+<style>
+  :root {
+    --bg: #0C0A07; --bg2: #131007; --bg3: #1A1509;
+    --card: #141108; --card-hover: #1E1A0E;
+    --border: rgba(255,200,80,0.07); --border-hover: rgba(255,150,30,0.35);
+    --accent: #F97316; --accent2: #FFAA00; --accent3: #FF6B35;
+    --accent4: #FCD34D; --accent5: #FB923C;
+    --text: #F0EAE0; --muted: #8A7D66; --tag-bg: rgba(249,115,22,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.6; }
+  .hero-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(249,115,22,0.13) 0%, transparent 70%); pointer-events: none; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(12,10,7,0.75); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Datatype', monospace; font-weight: 800; font-size: 18px; color: var(--text); letter-spacing: -0.5px; text-decoration: none; }
+  .nav-logo span { color: var(--accent2); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--accent2); background: rgba(255,170,0,0.08); border: 1px solid rgba(255,170,0,0.22); padding: 8px 18px; border-radius: 4px; text-decoration: none; transition: all 0.2s; }
+  .nav-cta:hover { background: rgba(255,170,0,0.15); border-color: rgba(255,170,0,0.5); }
+  .page-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 4px 12px; border-radius: 3px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 48px 80px; overflow: hidden; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent2); background: rgba(255,170,0,0.08); border: 1px solid rgba(255,170,0,0.18); padding: 6px 14px; border-radius: 100px; margin-bottom: 32px; letter-spacing: 0.1em; text-transform: uppercase; animation: fadeUp 0.6s ease both; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero h1 { font-family: 'Datatype', monospace; font-weight: 800; font-size: clamp(36px, 4.8vw, 76px); line-height: 0.95; letter-spacing: -2px; margin-bottom: 24px; animation: fadeUp 0.6s 0.1s ease both; }
+  .hero h1 .line1 { display: block; color: var(--text); }
+  .hero h1 .line2 { display: block; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent4) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 18px; font-weight: 300; color: var(--muted); max-width: 560px; line-height: 1.6; margin-bottom: 48px; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-stats { display: flex; gap: 48px; animation: fadeUp 0.6s 0.3s ease both; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Datatype', monospace; font-size: 36px; font-weight: 800; color: var(--text); display: block; }
+  .stat-label { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .stat-divider { width: 1px; background: var(--border); align-self: stretch; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px); background-size: 80px 80px; pointer-events: none; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent); }
+  section { position: relative; z-index: 1; padding: 80px 48px; max-width: 1280px; margin: 0 auto; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; }
+  .section-title { font-family: 'Datatype', monospace; font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px; color: var(--text); margin-bottom: 8px; }
+  .section-desc { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.6; margin-bottom: 48px; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .filter-btn { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; padding: 8px 18px; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.08em; }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); position: relative; animation: fadeUp 0.5s ease both; }
+  .card:hover { border-color: var(--border-hover); transform: translateY(-4px); background: var(--card-hover); box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(249,115,22,0.1); }
+  .card.hidden { display: none; }
+  .card-thumb { height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; font-size: 64px; }
+  .card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.4s ease; }
+  .card:hover .card-thumb img { transform: scale(1.04); }
+  .card.featured .card-thumb { height: 100%; min-height: 220px; }
+  .card.featured .card-thumb img { object-position: center center; }
+  .card-thumb-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 56px; }
+  .card-thumb-pattern { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 24px 24px; }
+  .card-body { padding: 24px; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .tag-orange { background: rgba(249,115,22,0.15); color: #FB923C; }
+  .tag-amber  { background: rgba(255,170,0,0.12);  color: var(--accent2); }
+  .tag-yellow { background: rgba(252,211,77,0.12); color: var(--accent4); }
+  .tag-warm   { background: rgba(255,255,255,0.06); color: #C4B89A; }
+  .card-title { font-family: 'Datatype', monospace; font-size: 17px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; color: var(--text); line-height: 1.2; }
+  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+  .card.coming-soon .card-body { background: #0D0B06; }
+  .card.coming-soon .card-desc { color: #A07A10; }
+  .tape-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: repeating-linear-gradient(45deg, #F97316, #F97316 8px, #1a0d00 8px, #1a0d00 16px); display: flex; align-items: center; justify-content: center; font-size: 9px; font-family: 'DM Mono', monospace; letter-spacing: 0.14em; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,1), 1px 1px 0 rgba(0,0,0,0.9), -1px -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9), -1px 1px 0 rgba(0,0,0,0.9); z-index: 10; }
+  .interior-tape { height: 20px; background: repeating-linear-gradient(45deg, #F97316, #F97316 7px, #1a0d00 7px, #1a0d00 14px); margin: -24px -24px 16px -24px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-family: 'DM Mono', monospace; letter-spacing: 0.16em; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,1), 1px 1px 0 rgba(0,0,0,0.9), -1px -1px 0 rgba(0,0,0,0.9); }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); }
+  .card-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .card-arrow { width: 28px; height: 28px; border-radius: 6px; background: var(--tag-bg); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 14px; transition: all 0.2s; }
+  .card:hover .card-arrow { background: var(--accent); color: white; transform: translateX(2px); }
+  .card.featured { grid-column: span 2; display: grid; grid-template-columns: 280px 1fr; }
+  .card.featured.hidden { display: none !important; }
+  @media (max-width: 768px) {
+    .card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .card.featured .card-thumb { height: 180px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { gap: 24px; }
+  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(8,6,3,0.93); backdrop-filter: blur(12px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: 16px; max-width: 720px; width: 100%; max-height: 85vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.3s; position: relative; }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header { padding: 32px 32px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .modal-close { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+  .modal-body { padding: 24px 32px 32px; }
+  .modal-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+  .modal-title { font-family: 'Datatype', monospace; font-size: 26px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; line-height: 1.1; }
+  .modal-subtitle { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .modal-section-title { font-family: 'Datatype', monospace; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 24px 0 10px; }
+  .modal-text { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .modal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .modal-list li { font-size: 14px; color: var(--muted); padding-left: 16px; position: relative; line-height: 1.6; }
+  .modal-list li::before { content: '->'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
+  .modal-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--accent2); text-decoration: none; border: 1px solid rgba(255,170,0,0.22); background: rgba(255,170,0,0.07); padding: 8px 16px; border-radius: 6px; margin-top: 20px; transition: all 0.2s; }
+  .modal-link:hover { background: rgba(255,170,0,0.14); border-color: rgba(255,170,0,0.45); }
+  .modal-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  .modal.wip { border-color: rgba(249,115,22,0.28); }
+  .modal-wip-header { background: repeating-linear-gradient(45deg, #F97316, #F97316 8px, #1a0d00 8px, #1a0d00 16px); height: 28px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-family: 'DM Mono', monospace; letter-spacing: 0.18em; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,1), 1px 1px 0 rgba(0,0,0,0.9), -1px -1px 0 rgba(0,0,0,0.9); flex-shrink: 0; }
+  .modal-wip-footer { height: 8px; background: repeating-linear-gradient(45deg, #F97316, #F97316 8px, #1a0d00 8px, #1a0d00 16px); opacity: 0.5; flex-shrink: 0; }
+  .wip-badge { display: flex; align-items: center; gap: 10px; background: rgba(249,115,22,0.07); border: 1px solid rgba(249,115,22,0.22); border-radius: 6px; padding: 10px 16px; margin-bottom: 20px; }
+  .wip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: wipPulse 1.4s infinite; }
+  @keyframes wipPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+  .wip-badge-text { font-family: 'DM Mono', monospace; font-size: 12px; color: #C47A22; letter-spacing: 0.06em; }
+  .modal-tape-divider { height: 18px; background: repeating-linear-gradient(45deg, #F97316, #F97316 7px, #1a0d00 7px, #1a0d00 14px); margin: 20px -32px; opacity: 0.55; }
+  .modal-link.wip-link { color: #C47A22; border-color: rgba(249,115,22,0.22); background: rgba(249,115,22,0.07); }
+  .modal-link.wip-link:hover { background: rgba(249,115,22,0.14); border-color: rgba(249,115,22,0.45); }
+  .about-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 48px 0; margin: 0; }
+  .about-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 768px) { .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 0 24px; } }
+  .about-name { font-family: 'Datatype', monospace; font-size: 42px; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+  .about-role { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+  .about-bio { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+  .tool-chips { display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .tool-chip { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 4px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .about-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .metric-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .metric-val { font-family: 'Datatype', monospace; font-size: 32px; font-weight: 800; color: var(--text); display: block; line-height: 1; }
+  .metric-val span { color: var(--accent); }
+  .metric-lbl { font-size: 12px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; max-width: 100%; background: var(--bg); }
+  @media (max-width: 600px) { footer { flex-direction: column; align-items: center; gap: 8px; padding: 24px; text-align: center; } }
+  .footer-left { font-family: 'Datatype', monospace; font-size: 15px; font-weight: 700; letter-spacing: -0.5px; }
+  .footer-left span { color: var(--accent2); }
+  .footer-right { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-in { animation: fadeUp 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">PM<span>.</span>Portfolio</a>
+  <div class="nav-links">
+    <a href="#portfolio">Workflows</a>
+    <a href="#about">About</a>
+    <a href="links.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <a href="index.html" style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#60A5FA;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);padding:8px 18px;border-radius:4px;text-decoration:none;transition:all 0.2s;letter-spacing:0.03em;" onmouseover="this.style.background='rgba(59,130,246,0.15)';this.style.borderColor='rgba(59,130,246,0.5)'" onmouseout="this.style.background='rgba(59,130,246,0.08)';this.style.borderColor='rgba(59,130,246,0.25)'">Portfolio<span style="color:#06EEFF">.</span>PM</a>
+    <a href="links.html" class="nav-cta">Available for work -></a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Automation Specialist - n8n Portfolio</div>
+  <h1>
+    <span class="line1">Building automation that</span>
+    <span class="line2">scales products, not effort</span>
+  </h1>
+  <p class="hero-sub">A collection of n8n automation systems - cold outreach flows, AI-powered scouts, support bots, and the logic behind every workflow decision.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">7</span>
+      <span class="stat-label">Workflows</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">n8n</span>
+      <span class="stat-label">Platform</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">&#8734;</span>
+      <span class="stat-label">Iterations</span>
+    </div>
+  </div>
+</div>
+
+<section id="portfolio">
+  <div class="section-label">// Automation Systems</div>
+  <h2 class="section-title">Workflows & Systems</h2>
+  <p class="section-desc">Click any card to explore the workflow, the context, and the thinking behind it.</p>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterCards(event, 'all')">All</button>
+    <button class="filter-btn" onclick="filterCards(event, 'system')">System</button>
+    <button class="filter-btn" onclick="filterCards(event, 'tool')">Tool</button>
+  </div>
+
+  <div class="card-grid" id="cardGrid">
+
+    <!-- CARD 1: Cold Outreach (FEATURED, Done) -->
+    <div class="card featured" data-cat="system" onclick="openModal('cold-outreach')" id="featuredCard">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD4.png" data-emoji="&#x1F4E4;" data-bg="linear-gradient(135deg, #1A0E05, #2A1A08)" data-color="linear-gradient(135deg, #F97316, #FB923C)"></div>
+      <div class="card-body" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="card-tags">
+          <span class="tag tag-amber">AI</span>
+          <span class="tag tag-orange">Cold Outreach</span>
+          <span class="tag tag-warm">Human-in-the-Loop</span>
+        </div>
+        <div class="card-title">Cold Outreach System</div>
+        <div class="card-desc">AI-powered cold outreach system that generates highly personalized email drafts from prospect data while keeping a human in the loop before sending.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Business Opportunity Scout (Done) -->
+    <div class="card" data-cat="system" onclick="openModal('reddit-scout')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD1.png" data-emoji="&#x1F50D;" data-bg="linear-gradient(135deg, #180A02, #261408)" data-color="linear-gradient(135deg, #FB923C, #EA580C)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-amber">AI</span>
+          <span class="tag tag-orange">Market Research</span>
+          <span class="tag tag-warm">Reddit Automation</span>
+        </div>
+        <div class="card-title">Business Opportunity Scout - AI (Reddit)</div>
+        <div class="card-desc">AI-powered Reddit research system that discovers business opportunities, summarizes valuable discussions, and generates potential solution ideas automatically.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n + AI &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Analyzing & Chart (Done) -->
+    <div class="card" data-cat="tool" onclick="openModal('chart-assistant')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD2.png" data-emoji="&#x1F4CA;" data-bg="linear-gradient(135deg, #130A00, #201200)" data-color="linear-gradient(135deg, #FCD34D, #F97316)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-amber">AI</span>
+          <span class="tag tag-yellow">Analytics</span>
+          <span class="tag tag-orange">Data Visualization</span>
+        </div>
+        <div class="card-title">Analyzing & Chart Creating AI Assistant</div>
+        <div class="card-desc">AI-powered analytics agent that transforms structured business data into insights, trends, and automated visual reports using database integration and chart generation workflows.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n + AI &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Personalized DM Follow-up (Done) -->
+    <div class="card" data-cat="system" onclick="openModal('dm-followup')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD3.png" data-emoji="&#x1F4AC;" data-bg="linear-gradient(135deg, #150C02, #221605)" data-color="linear-gradient(135deg, #FBBF24, #F97316)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-orange">Lead Generation</span>
+          <span class="tag tag-amber">Sales</span>
+          <span class="tag tag-warm">CRM</span>
+        </div>
+        <div class="card-title">Personalized DM Follow-up System</div>
+        <div class="card-desc">AI-powered lead engagement system that instantly generates hyper-personalized responses to new inquiries, dramatically reducing response time and increasing conversion rates.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5: Smart WhatsApp (WIP) -->
+    <div class="card" data-cat="system" data-coming-soon="true" onclick="openModal('whatsapp-support')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD5.png" data-emoji="&#x1F916;" data-bg="linear-gradient(135deg, #0C1005, #141A08)" data-color="linear-gradient(135deg, #FB923C, #16A34A)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-amber">AI Assistant</span>
+          <span class="tag tag-orange">Customer Support</span>
+        </div>
+        <div class="card-title">Smart WhatsApp AI Assistant Using Google Docs</div>
+        <div class="card-desc">AI-powered WhatsApp assistant that answers questions instantly using live Google Docs knowledge - no retraining required.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n + AI + WhatsApp &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6: Email HITL (WIP) -->
+    <div class="card" data-cat="system" data-coming-soon="true" onclick="openModal('hitl-email')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD6.png" data-emoji="&#x1F4E7;" data-bg="linear-gradient(135deg, #0E0802, #1C1204)" data-color="linear-gradient(135deg, #F59E0B, #D97706)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-orange">Email</span>
+          <span class="tag tag-amber">AI Assistant</span>
+          <span class="tag tag-warm">Human-in-the-Loop</span>
+        </div>
+        <div class="card-title">Email Generation with AI and IMAP System - Human in the Loop</div>
+        <div class="card-desc">AI-powered email assistant that summarizes incoming emails and drafts responses with human approval before sending.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n + IMAP + AI &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 7: Create Visual / Chart (WIP) -->
+    <div class="card" data-cat="tool" data-coming-soon="true" onclick="openModal('create-visual')">
+      <div class="card-thumb" data-img="images_portfolio-n8n/n8n_CARD7.png" data-emoji="&#x1F4CA;" data-bg="linear-gradient(135deg, #100800, #1E1000)" data-color="linear-gradient(135deg, #FBBF24, #FB923C)"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-yellow">Data Visualization</span>
+          <span class="tag tag-amber">AI</span>
+          <span class="tag tag-orange">Reporting</span>
+        </div>
+        <div class="card-title">Create Visual / Chart - Tool</div>
+        <div class="card-desc">Automated chart-generation tool that converts minimally structured data into visual reports using dynamic QuickChart workflows.</div>
+        <div class="card-footer">
+          <span class="card-meta">n8n &middot; 2026</span>
+          <div class="card-arrow">-></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="about-strip" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="about-name">Petro Osypenko</div>
+      <div class="about-role">Automation Specialist</div>
+      <p class="about-bio">
+        I build automation systems that remove repetitive friction and let teams focus on meaningful work. My approach combines structured thinking with a hands-on curiosity for how tools can be wired together - turning complex workflows into clean, reliable pipelines that actually run.
+      </p>
+      <div class="tool-chips">
+        <span class="tool-chip">n8n</span>
+        <span class="tool-chip">AI / LLM</span>
+        <span class="tool-chip">Turnkey projects</span>
+        <span class="tool-chip">Google AI studio</span>
+        <span class="tool-chip">OpenRouter</span>
+        <span class="tool-chip">CRM</span>
+        <span class="tool-chip">Webhooks</span>
+        <span class="tool-chip">IMAP / Email</span>
+        <span class="tool-chip">API</span>
+        <span class="tool-chip">HTTP Requests</span>
+        <span class="tool-chip">OpenAI / Anthropic</span>
+        <span class="tool-chip">JSON / Data mapping</span>
+        <span class="tool-chip">Data Base</span>
+        <span class="tool-chip">Backend</span>
+        <span class="tool-chip">Low-code Automation</span>
+      </div>
+    </div>
+    <div class="about-metrics">
+      <div class="metric-card">
+        <span class="metric-val">15<span>+</span></span>
+        <div class="metric-lbl">Systems built</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">n8n</span>
+        <div class="metric-lbl">Primary platform</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">AI<span>+</span></span>
+        <div class="metric-lbl">Powered nodes</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">&#8734;</span>
+        <div class="metric-lbl">Nodes connected</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">PM<span>.</span>Portfolio</div>
+  <div class="footer-right">Built to prove the passion ;) &middot; 2026</div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div id="modalWipHeader"></div>
+    <div class="modal-header">
+      <div></div>
+      <button class="modal-close" onclick="closeModal()">X</button>
+    </div>
+    <div class="modal-body" id="modalContent"></div>
+    <div id="modalWipFooter"></div>
+  </div>
+</div>
+
+<script>
+const modalData = {
+
+  'cold-outreach': {
+    icon: '&#x1F4E4;',
+    title: 'Cold Outreach System',
+    subtitle: 'n8n - AI - Human-in-the-Loop - 2026',
+    tags: ['<span class="tag tag-amber">AI</span>', '<span class="tag tag-orange">Cold Outreach</span>', '<span class="tag tag-warm">Human-in-the-Loop</span>'],
+    overview: 'The Cold Outreach System is an AI-assisted lead engagement workflow designed to generate highly personalized outbound emails at scale. The system pulls prospect data from databases such as Google Sheets, uses local AI models to generate structured outreach content, and prepares human-review email drafts before sending. Each message is dynamically built with personalized icebreakers, elevator pitches, calls to action, and follow-up structure - helping businesses improve outreach quality while significantly reducing manual work.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: High (improves outbound conversion potential through personalized outreach at scale)',
+        'Cost reduction: High (reduces manual prospect research and email writing workload)',
+        'Time savings: High (automates lead personalization and draft generation)',
+      ]},
+      { title: 'Target Area', items: [
+        'Lead generation',
+        'Sales outreach',
+        'Prospect engagement',
+        'B2B communication',
+      ]},
+    ],
+    link: { text: '-> View workflow', href: '#' },
+  },
+
+  'reddit-scout': {
+    icon: '&#x1F50D;',
+    title: 'Business Opportunity Scout - AI (Reddit)',
+    subtitle: 'n8n - AI - Market Research - 2026',
+    tags: ['<span class="tag tag-amber">AI</span>', '<span class="tag tag-orange">Market Research</span>', '<span class="tag tag-warm">Reddit Automation</span>'],
+    overview: 'The Business Opportunity Scout - AI (Reddit) is an automated research system designed to identify valuable market opportunities, pain points, and business ideas from Reddit discussions. The workflow continuously collects posts, filters relevant content through multiple validation stages, and uses AI to generate summaries and possible solution ideas. The system significantly reduces manual niche research time while creating a structured database of actionable insights. It also tracks irrelevant outputs separately to monitor AI drift, maintain quality standards, and improve long-term reliability.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: Medium-High (helps identify underserved market opportunities and customer pain points faster)',
+        'Cost reduction: High (reduces hours of manual niche and trend research)',
+        'Time savings: High (automates filtering, summarization, and opportunity discovery workflows)',
+      ]},
+      { title: 'Target Area', items: [
+        'Market research',
+        'Opportunity discovery',
+        'Product validation',
+        'Trend monitoring',
+      ]},
+    ],
+    link: { text: '-> View workflow', href: '#' },
+  },
+
+  'chart-assistant': {
+    icon: '&#x1F4CA;',
+    title: 'Analyzing & Chart Creating AI Assistant',
+    subtitle: 'n8n - AI - Analytics - 2026',
+    tags: ['<span class="tag tag-amber">AI</span>', '<span class="tag tag-yellow">Analytics</span>', '<span class="tag tag-orange">Data Visualization</span>'],
+    overview: 'This AI agent is designed to analyze structured business data and automatically generate visual reports. It combines database access through NocoDB with AI-powered analytical reasoning and a dedicated chart-generation workflow. The system can answer analytical questions, identify trends, summarize findings, and create visualizations based on the requested data - reducing manual reporting work and accelerating decision-making.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: Medium-High (improves speed and quality of business decision-making through instant analytics)',
+        'Cost reduction: High (reduces manual analyst and reporting workload)',
+        'Time savings: High (automates data analysis and chart creation processes)',
+      ]},
+      { title: 'Target Area', items: [
+        'Business intelligence',
+        'Reporting automation',
+        'Internal analytics',
+        'Operational monitoring',
+      ]},
+    ],
+    link: { text: '-> View workflow', href: '#' },
+  },
+
+  'dm-followup': {
+    icon: '&#x1F4AC;',
+    title: 'Personalized DM Follow-up System',
+    subtitle: 'n8n - Lead Generation - Sales - 2026',
+    tags: ['<span class="tag tag-orange">Lead Generation</span>', '<span class="tag tag-amber">Sales</span>', '<span class="tag tag-warm">CRM</span>'],
+    overview: 'The Personalized DM Follow-up System is an AI-powered lead engagement solution that automatically sends hyper-personalized responses within minutes of a customer inquiry. By reducing lead response time - a critical factor in conversion - the system helps businesses increase revenue opportunities while eliminating manual follow-up delays. Built with a modular workflow structure, each stage of the system is separated for easier monitoring, maintenance, scalability, and faster staff onboarding.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: High (dramatically improves lead response time, a critical factor in conversion)',
+        'Cost reduction: Medium (reduces manual follow-up work)',
+        'Time savings: High (eliminates lag between inquiry and response)',
+      ]},
+      { title: 'Target Area', items: [
+        'Lead response optimization',
+        'Sales acceleration',
+      ]},
+    ],
+    link: { text: '-> View workflow', href: '#' },
+  },
+
+  'whatsapp-support': {
+    wip: true,
+    icon: '&#x1F916;',
+    title: 'Smart WhatsApp AI Assistant Using Google Docs',
+    subtitle: 'n8n - AI Assistant - Customer Support - 2026',
+    tags: ['<span class="tag tag-amber">AI Assistant</span>', '<span class="tag tag-orange">Customer Support</span>'],
+    overview: 'The Smart WhatsApp AI Assistant Using Google Docs is an AI-powered support system that automatically answers WhatsApp inquiries using live company knowledge stored in Google Docs. The system reads updated documentation in real time, generates context-aware responses, and replies instantly through WhatsApp - without requiring model retraining or technical updates. By separating knowledge management from the AI logic, businesses can easily maintain and scale customer communication workflows through simple document updates.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: Medium-High (improves customer engagement and response availability)',
+        'Cost reduction: High (reduces repetitive support workload and manual answering)',
+        'Time savings: High (automates instant responses using live documentation)',
+      ]},
+      { title: 'Target Area', items: [
+        'Customer support',
+        'Internal knowledge access',
+        'Messaging automation',
+        'Client communication',
+      ]},
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+
+  'hitl-email': {
+    wip: true,
+    icon: '&#x1F4E7;',
+    title: 'Email Generation with AI and IMAP System - Human in the Loop',
+    subtitle: 'n8n - Email - AI Assistant - HITL - 2026',
+    tags: ['<span class="tag tag-orange">Email</span>', '<span class="tag tag-amber">AI Assistant</span>', '<span class="tag tag-warm">Human-in-the-Loop</span>'],
+    overview: 'The Email Generation with AI and IMAP System - Human in the Loop is an AI-assisted email workflow that automates inbox processing, message summarization, and response drafting while keeping final approval under human control. The system integrates with providers such as Gmail and Outlook, converts emails into AI-efficient formats to reduce token costs, and generates context-aware replies automatically. By combining automation with human validation, the workflow accelerates email handling while maintaining quality, accuracy, and operational control.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: Medium-High (improves response consistency and communication speed)',
+        'Cost reduction: High (reduces repetitive email handling and drafting workload)',
+        'Time savings: High (automates summarization and response generation workflows)',
+      ]},
+      { title: 'Target Area', items: [
+        'Lead communication',
+        'Inbox management',
+        'Support operations',
+        'Internal productivity',
+      ]},
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+
+  'create-visual': {
+    wip: true,
+    icon: '&#x1F4CA;',
+    title: 'Create Visual / Chart - Tool',
+    subtitle: 'n8n - Data Visualization - Analytics - 2026',
+    tags: ['<span class="tag tag-yellow">Data Visualization</span>', '<span class="tag tag-amber">AI</span>', '<span class="tag tag-orange">Reporting</span>'],
+    overview: 'The Create Visual / Chart Tool is an automated visualization workflow that transforms structured data into ready-to-use charts through dynamic QuickChart generation. The system receives data and chart requests, builds properly formatted visualization configurations, and automatically returns generated chart links for further use in reports, dashboards, or AI workflows. The tool is designed as a modular visualization layer that can be integrated into larger analytical and reporting systems, with future expansion planned for more advanced chart types and visualizations.',
+    sections: [
+      { title: 'Business Impact', items: [
+        'Revenue generation: Medium (improves clarity of reporting and decision-making processes)',
+        'Cost reduction: Medium-High (reduces manual chart creation and reporting workload)',
+        'Time savings: High (automates visualization generation from structured data)',
+      ]},
+      { title: 'Target Area', items: [
+        'Reporting automation',
+        'Business analytics',
+        'Dashboard visualization',
+        'Data presentation',
+      ]},
+    ],
+    link: { text: '-> Coming soon', href: 'links.html' },
+  },
+
+};
+
+function openModal(key) {
+  const d = modalData[key];
+  if (!d) return;
+  const box = document.getElementById('modalBox');
+  const wipHeader = document.getElementById('modalWipHeader');
+  const wipFooter = document.getElementById('modalWipFooter');
+  if (d.wip) {
+    box.classList.add('wip');
+    wipHeader.innerHTML = '<div class="modal-wip-header">WORK IN PROGRESS</div>';
+    wipFooter.innerHTML = '<div class="modal-wip-footer"></div>';
+  } else {
+    box.classList.remove('wip');
+    wipHeader.innerHTML = '';
+    wipFooter.innerHTML = '';
+  }
+  let html = `<span class="modal-icon">${d.icon}</span><div class="card-tags" style="margin-bottom:12px">${d.tags.join('')}</div><div class="modal-title">${d.title}</div><div class="modal-subtitle">${d.subtitle}</div>`;
+  if (d.wip) {
+    html += `<div class="wip-badge"><div class="wip-dot"></div><span class="wip-badge-text">This case study is currently being prepared</span></div>`;
+  } else {
+    html += `<hr class="modal-divider"/>`;
+  }
+  html += `<div class="modal-section-title">Overview</div><p class="modal-text">${d.overview}</p>`;
+  d.sections.forEach(s => {
+    if (d.wip && s.title === 'Target Area') html += `<div class="modal-tape-divider"></div>`;
+    html += `<div class="modal-section-title">${s.title}</div>`;
+    if (s.prose) {
+      html += `<p class="modal-text">${s.prose}</p>`;
+    } else {
+      html += `<ul class="modal-list">`;
+      s.items.forEach(i => { html += `<li>${i}</li>`; });
+      html += `</ul>`;
+    }
+  });
+  if (d.link) {
+    const linkClass = d.wip ? 'modal-link wip-link' : 'modal-link';
+    html += `<a href="${d.link.href}" class="${linkClass}">${d.link.text}</a>`;
+  }
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function filterCards(e, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  const featured = document.getElementById('featuredCard');
+  if (featured) {
+    featured.style.gridColumn = featured.classList.contains('hidden') ? '' : 'span 2';
+  }
+}
+
+document.querySelectorAll('.card-thumb').forEach(thumb => {
+  const imgSrc = thumb.dataset.img;
+  const emoji  = thumb.dataset.emoji;
+  const bg     = thumb.dataset.bg;
+  const color  = thumb.dataset.color;
+  thumb.style.background = bg;
+  if (imgSrc) {
+    const img = new Image();
+    img.onload = () => { thumb.innerHTML = ''; const el = document.createElement('img'); el.src = imgSrc; el.alt = ''; thumb.appendChild(el); };
+    img.onerror = () => renderEmoji(thumb, emoji, color);
+    img.src = imgSrc;
+  } else {
+    renderEmoji(thumb, emoji, color);
+  }
+});
+
+function renderEmoji(thumb, emoji, color) {
+  thumb.innerHTML = `<div style="position:absolute;inset:0;background:${color};opacity:0.15;"></div><div class="card-thumb-pattern"></div><div class="card-thumb-inner">${emoji}</div>`;
+}
+
+document.querySelectorAll('.card[data-coming-soon="true"]').forEach(card => {
+  card.classList.add('coming-soon');
+  const thumb = card.querySelector('.card-thumb');
+  if (thumb) { const bar = document.createElement('div'); bar.className = 'tape-bar'; bar.textContent = 'COMING SOON'; thumb.appendChild(bar); }
+  const body = card.querySelector('.card-body');
+  if (body) { const strip = document.createElement('div'); strip.className = 'interior-tape'; strip.textContent = 'WORK IN PROGRESS'; body.insertBefore(strip, body.firstChild); }
+});
+</script>
+</body>
+</html>
